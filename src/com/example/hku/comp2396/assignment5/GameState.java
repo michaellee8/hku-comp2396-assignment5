@@ -5,42 +5,49 @@ import java.io.Serializable;
 
 public class GameState implements Serializable {
 
-  enum PlayerSymbol {
+  public enum PlayerSymbol {
     O,
     X,
     E
   }
 
-  PlayerSymbol[][] board = {
+  public PlayerSymbol[][] board = {
       {PlayerSymbol.E, PlayerSymbol.E, PlayerSymbol.E},
       {PlayerSymbol.E, PlayerSymbol.E, PlayerSymbol.E},
       {PlayerSymbol.E, PlayerSymbol.E, PlayerSymbol.E}
   };
 
-  PlayerSymbol winner = PlayerSymbol.E;
+  public PlayerSymbol winner = PlayerSymbol.E;
 
-  PlayerSymbol nextStep = PlayerSymbol.O;
+  public PlayerSymbol nextStep = PlayerSymbol.O;
 
-  String OName = "";
+  public String OName = "";
 
-  String XName = "";
+  public String XName = "";
 
-  String OMessage = "Enter your player name...";
+  public String OMessage = "Enter your player name...";
 
-  String XMessage = "Enter your player name...";
+  public String XMessage = "Enter your player name...";
 
-  String OTitle = "Tic Tac Toe";
+  public String OTitle = "Tic Tac Toe";
 
-  String XTitle = "Tic Tac Toe";
+  public String XTitle = "Tic Tac Toe";
 
   /**
-   * The message to be displayed to the user as an alert before game ends for
+   * The message to be displayed to the O user as an alert before game ends for
    * any reason. After displaying such alert, the client should close itself,
    * and the server should reset the state.
    */
-  String endGameMessage = "";
+  public String OEndGameMessage = "";
 
-  String getName(PlayerSymbol ps) {
+  /**
+   * The message to be displayed to the X user as an alert before game ends for
+   * any reason. After displaying such alert, the client should close itself,
+   * and the server should reset the state.
+   */
+  public String XEndGameMessage = "";
+
+  public String getName(PlayerSymbol ps) {
     assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
     if (ps == PlayerSymbol.O) {
       return OName;
@@ -51,7 +58,7 @@ public class GameState implements Serializable {
     return "";
   }
 
-  String getMessage(PlayerSymbol ps) {
+  public String getMessage(PlayerSymbol ps) {
     assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
     if (ps == PlayerSymbol.O) {
       return OMessage;
@@ -62,7 +69,7 @@ public class GameState implements Serializable {
     return "";
   }
 
-  String getTitle(PlayerSymbol ps) {
+  public String getTitle(PlayerSymbol ps) {
     assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
     if (ps == PlayerSymbol.O) {
       return OTitle;
@@ -71,6 +78,57 @@ public class GameState implements Serializable {
       return XTitle;
     }
     return "";
+  }
+
+  public String getEndGameMessage(PlayerSymbol ps) {
+    assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
+    if (ps == PlayerSymbol.O) {
+      return OEndGameMessage;
+    }
+    if (ps == PlayerSymbol.X) {
+      return XEndGameMessage;
+    }
+    return "";
+  }
+
+  public void setName(PlayerSymbol ps, String payload) {
+    assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
+    if (ps == PlayerSymbol.O) {
+      OName = payload;
+    }
+    if (ps == PlayerSymbol.X) {
+      XName = payload;
+    }
+  }
+
+  public void setMessage(PlayerSymbol ps, String payload) {
+    assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
+    if (ps == PlayerSymbol.O) {
+      OMessage = payload;
+    }
+    if (ps == PlayerSymbol.X) {
+      XMessage = payload;
+    }
+  }
+
+  public void setTitle(PlayerSymbol ps, String payload) {
+    assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
+    if (ps == PlayerSymbol.O) {
+      OTitle = payload;
+    }
+    if (ps == PlayerSymbol.X) {
+      XTitle = payload;
+    }
+  }
+
+  public void setEndGameMessage(PlayerSymbol ps, String payload) {
+    assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
+    if (ps == PlayerSymbol.O) {
+      OEndGameMessage = payload;
+    }
+    if (ps == PlayerSymbol.X) {
+      XEndGameMessage = payload;
+    }
   }
 
 }
