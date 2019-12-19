@@ -8,9 +8,19 @@ import java.util.Collections;
 
 public class GameLogicHandler {
 
+  static final String loseMessage = "You lose.";
+  static final String winMessage = "Congratulations. You Win.";
+  static final String drawMessage = "Draw.";
+  static final String playerLeftMessage =
+      "Game Ends. One of the players left.";
+  static final String selfMovedMessage =
+      "Valid move, wait for your opponent.";
+  static final String opponentMovedMessage =
+      "Your opponent has moved, now is your turn.";
+
   public GameState state = new GameState();
 
-  public void handleAction(GameAction action) {
+  public synchronized void handleAction(GameAction action) {
     assert action.side == PlayerSymbol.O || action.side == PlayerSymbol.X;
     switch (action.actionType) {
       case register:
@@ -26,6 +36,19 @@ public class GameLogicHandler {
         exit(action.side);
         break;
     }
+  }
+
+  public PlayerSymbol detectWinner() {
+    if (detectRow() != PlayerSymbol.E) {
+      return detectRow();
+    }
+    if (detectCol() != PlayerSymbol.E) {
+      return detectCol();
+    }
+    if (detectSlash() != PlayerSymbol.E) {
+      return detectSlash();
+    }
+    return PlayerSymbol.E;
   }
 
   public PlayerSymbol detectRow() {
@@ -88,25 +111,83 @@ public class GameLogicHandler {
     return PlayerSymbol.E;
   }
 
+  public boolean detectDraw() {
+    for (var i = 0; i < 3; i++) {
+      for (var j = 0; j < 3; j++) {
+        if (state.board[i][j] == PlayerSymbol.E) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   public void register(PlayerSymbol side, String name) {
-    if (name.equals("")) {
+    if (name == null || name.equals("")) {
+      return;
+    }
+    if (!state.getName(side).equals("")) {
       return;
     }
     state.setName(side, name);
+    state.setMessage(side, "WELCOME " + name);
   }
 
   public void performMove(PlayerSymbol side, int row, int col) {
+    if (!isGameStarted()) {
+      return;
+    }
+    if (state.board[row][col] != PlayerSymbol.E) {
+      return;
+    }
+    if (state.nextStep != side) {
+      return;
+    }
     state.board[row][col] = side;
+    if (side == PlayerSymbol.O) {
+      state.setMessage(PlayerSymbol.O, selfMovedMessage);
+      state.setMessage(PlayerSymbol.X, opponentMovedMessage);
+      state.nextStep = PlayerSymbol.X;
+    }
+    if (side == PlayerSymbol.X) {
+      state.setMessage(PlayerSymbol.X, selfMovedMessage);
+      state.setMessage(PlayerSymbol.O, opponentMovedMessage);
+      state.nextStep = PlayerSymbol.O;
+    }
+    var winner = detectWinner();
+    if (winner == PlayerSymbol.O) {
+      state.setEndGameMessage(PlayerSymbol.O, winMessage);
+      state.setEndGameMessage(PlayerSymbol.X, loseMessage);
+      return;
+    }
+    if (winner == PlayerSymbol.X) {
+      state.setEndGameMessage(PlayerSymbol.X, winMessage);
+      state.setEndGameMessage(PlayerSymbol.O, loseMessage);
+      return;
+    }
+    if (detectDraw()) {
+      state.setEndGameMessage(PlayerSymbol.O, drawMessage);
+      state.setEndGameMessage(PlayerSymbol.X, drawMessage);
+      return;
+    }
   }
 
   public void exit(PlayerSymbol side) {
     state.setEndGameMessage(
         PlayerSymbol.O,
-        "Game Ends. One of the players left."
+        playerLeftMessage
     );
     state.setEndGameMessage(
         PlayerSymbol.X,
-        "Game Ends. One of the players left."
+        playerLeftMessage
     );
+  }
+
+  public void afterExit() {
+    state = new GameState();
+  }
+
+  public boolean isGameStarted() {
+    return !state.OName.equals("") && !state.XName.equals("");
   }
 }

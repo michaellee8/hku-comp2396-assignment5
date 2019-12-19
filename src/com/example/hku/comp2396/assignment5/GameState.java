@@ -52,6 +52,7 @@ public class GameState implements Serializable {
     if (ps == PlayerSymbol.O) {
       return OName;
     }
+    //noinspection ConstantConditions
     if (ps == PlayerSymbol.X) {
       return XName;
     }
@@ -63,6 +64,7 @@ public class GameState implements Serializable {
     if (ps == PlayerSymbol.O) {
       return OMessage;
     }
+    //noinspection ConstantConditions
     if (ps == PlayerSymbol.X) {
       return XMessage;
     }
@@ -74,6 +76,7 @@ public class GameState implements Serializable {
     if (ps == PlayerSymbol.O) {
       return OTitle;
     }
+    //noinspection ConstantConditions
     if (ps == PlayerSymbol.X) {
       return XTitle;
     }
@@ -85,6 +88,7 @@ public class GameState implements Serializable {
     if (ps == PlayerSymbol.O) {
       return OEndGameMessage;
     }
+    //noinspection ConstantConditions
     if (ps == PlayerSymbol.X) {
       return XEndGameMessage;
     }
