@@ -20,6 +20,8 @@ public class GameLogicHandler {
 
   public GameState state = new GameState();
 
+  public boolean isInExitProcedure = false;
+
   public synchronized void handleAction(GameAction action) {
     assert action.side == PlayerSymbol.O || action.side == PlayerSymbol.X;
     switch (action.actionType) {
@@ -33,7 +35,7 @@ public class GameLogicHandler {
         performMove(action.side, row, col);
         break;
       case exit:
-        exit(action.side);
+        exit();
         break;
     }
   }
@@ -172,7 +174,7 @@ public class GameLogicHandler {
     }
   }
 
-  public void exit(PlayerSymbol side) {
+  public void exit() {
     state.setEndGameMessage(
         PlayerSymbol.O,
         playerLeftMessage
@@ -181,13 +183,19 @@ public class GameLogicHandler {
         PlayerSymbol.X,
         playerLeftMessage
     );
+    isInExitProcedure = true;
   }
 
   public void afterExit() {
     state = new GameState();
+    isInExitProcedure = false;
   }
 
   public boolean isGameStarted() {
     return !state.OName.equals("") && !state.XName.equals("");
+  }
+
+  public GameState getState() {
+    return state;
   }
 }
