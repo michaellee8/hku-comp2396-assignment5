@@ -195,7 +195,7 @@ public class GameLogicHandler {
     return !state.OName.equals("") && !state.XName.equals("");
   }
 
-  public GameState getState() {
+  public synchronized GameState getState() {
     return state;
   }
 }

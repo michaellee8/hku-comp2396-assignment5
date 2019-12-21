@@ -7,17 +7,21 @@ import java.util.concurrent.locks.Condition;
 
 public class GameActionReceiver implements Runnable {
 
+  Runnable onDetectExit;
+
   GameLogicHandler handler;
 
   Condition notifier;
 
   InputStream stream;
 
-  public GameActionReceiver(GameLogicHandler handler, Condition notifier,
+  public GameActionReceiver(Runnable onDetectExit, GameLogicHandler handler,
+      Condition notifier,
       InputStream stream) {
     this.handler = handler;
     this.notifier = notifier;
     this.stream = stream;
+    this.onDetectExit = onDetectExit;
   }
 
   @Override
@@ -32,13 +36,19 @@ public class GameActionReceiver implements Runnable {
     }
 
     while (true) {
+      GameAction action;
       try {
-        var action = (GameAction) os.readObject();
+        action = (GameAction) os.readObject();
       } catch (IOException e) {
         e.printStackTrace();
+        onDetectExit.run();
+        return;
       } catch (ClassNotFoundException e) {
         e.printStackTrace();
+        return;
       }
+      handler.handleAction(action);
+      notifier.notifyAll();
     }
 
   }
