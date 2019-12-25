@@ -7,6 +7,11 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class TicTacToeServer {
 
+  /**
+   * Main server app ti run
+   *
+   * @param args arguments
+   */
   public static void main(String[] args) {
     try {
       var handler = new GameLogicHandler();

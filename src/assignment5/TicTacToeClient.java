@@ -26,6 +26,9 @@ import javax.swing.SwingConstants;
 
 public class TicTacToeClient {
 
+  /**
+   * What to do when window close
+   */
   WindowListener closeListener = new WindowAdapter() {
 
     @Override
@@ -35,6 +38,9 @@ public class TicTacToeClient {
     }
   };
 
+  /**
+   * Rules of game as displayed
+   */
   static String rules = "Some information about the game:\n"
 //      + "\n"
       + "Criteria for a valid move:\n"
@@ -52,6 +58,9 @@ public class TicTacToeClient {
 //      + "\n"
       + "-Draw.";
 
+  /**
+   * The socket output stream
+   */
   public OutputStream os;
 
   // Main frame
@@ -87,6 +96,9 @@ public class TicTacToeClient {
   private GameState currentState = new GameState();
 
 
+  /**
+   * Initiate the game
+   */
   public void init() {
 
     // Configure boxes for holding the symbols
@@ -175,8 +187,13 @@ public class TicTacToeClient {
     });
   }
 
-  PlayerSymbol symbol = PlayerSymbol.E;
+  private PlayerSymbol symbol = PlayerSymbol.E;
 
+  /**
+   * Apply received game state
+   *
+   * @param state such state
+   */
   public void applyState(GameState state) {
     currentState = state;
     if (symbol != PlayerSymbol.O && symbol != PlayerSymbol.X) {
@@ -207,7 +224,7 @@ public class TicTacToeClient {
   }
 
 
-  public String translateSymbol(PlayerSymbol symbol) {
+  private String translateSymbol(PlayerSymbol symbol) {
     switch (symbol) {
       case E:
         return " ";
@@ -219,8 +236,16 @@ public class TicTacToeClient {
     return null;
   }
 
+  /**
+   * Address to localhost
+   */
   static final String host = "127.0.0.1";
 
+  /**
+   * Main client app to run
+   *
+   * @param args arguments
+   */
   public static void main(String[] args) {
     var client = new TicTacToeClient();
     client.init();

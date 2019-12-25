@@ -5,9 +5,21 @@ import java.net.Socket;
 
 public class GameActionClient {
 
+  /**
+   * Port used.
+   */
   static int port = 2019;
+
+  /**
+   * Address to localhost.
+   */
   static String host = "127.0.0.1";
 
+  /**
+   * Send a GameAction
+   *
+   * @param action the GameAction to send
+   */
   static void send(GameAction action) {
     try {
       var so = new Socket(host, port);

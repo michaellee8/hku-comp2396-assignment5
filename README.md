@@ -18,9 +18,9 @@ or client events.
 
 ## How to run
 1. Open a terminal in the root folder of this repo. It is assumed that you are using Linux.
-2. `mkdir out`
+2. `mkdir -p out`
 3. Compile the code with `javac src/assignment5/*.java -d out`
 4. `cd out`
 5. Run the server component with `java assignment5.TicTacToeServer`
 6. For each GUI client you need to start (mostly 2), open a new terminal in the root directory of 
-this repo, and enter `cd out && java assignment5.TicTacToeClient`.
+this repo, and enter `cd out && java assignment5.TicTacToeClient && cd ../`.

@@ -6,22 +6,37 @@ import java.util.Collections;
 
 public class GameLogicHandler {
 
-  static final String loseMessage = "You lose.";
-  static final String winMessage = "Congratulations. You Win.";
-  static final String drawMessage = "Draw.";
-  static final String playerLeftMessage =
+  private static final String loseMessage = "You lose.";
+  private static final String winMessage = "Congratulations. You Win.";
+  private static final String drawMessage = "Draw.";
+  private static final String playerLeftMessage =
       "Game Ends. One of the players left.";
-  static final String selfMovedMessage =
+  private static final String selfMovedMessage =
       "Valid move, wait for your opponent.";
-  static final String opponentMovedMessage =
+  private static final String opponentMovedMessage =
       "Your opponent has moved, now is your turn.";
 
+  /**
+   * Current state of game
+   */
   public GameState state = new GameState();
 
+  /**
+   * Whether game is in exit routine
+   */
   public boolean isInExitProcedure = false;
+
+  /**
+   * Things to do after afterExit
+   */
   public Runnable postExit = () -> {
   };
 
+  /**
+   * Handle the supplied action
+   *
+   * @param action the action as supplied
+   */
   public synchronized void handleAction(GameAction action) {
     assert action.side == PlayerSymbol.O || action.side == PlayerSymbol.X;
     switch (action.actionType) {
@@ -40,6 +55,11 @@ public class GameLogicHandler {
     }
   }
 
+  /**
+   * Detect whether winner exist
+   *
+   * @return such winner if exist, otherwise #
+   */
   public PlayerSymbol detectWinner() {
     if (detectRow() != PlayerSymbol.E) {
       return detectRow();
@@ -53,6 +73,11 @@ public class GameLogicHandler {
     return PlayerSymbol.E;
   }
 
+  /**
+   * Detect whether winner exist in row form
+   *
+   * @return such winner if exist, otherwise #
+   */
   public PlayerSymbol detectRow() {
     for (var i = 0; i < 3; i++) {
       if (
@@ -69,6 +94,11 @@ public class GameLogicHandler {
     return PlayerSymbol.E;
   }
 
+  /**
+   * Detect whether winner exist in column form
+   *
+   * @return such winner if exist, otherwise #
+   */
   public PlayerSymbol detectCol() {
     for (var i = 0; i < 3; i++) {
       if (
@@ -89,6 +119,11 @@ public class GameLogicHandler {
     return PlayerSymbol.E;
   }
 
+  /**
+   * Detect whether winner exist in slash form
+   *
+   * @return such winner if exist, otherwise #
+   */
   public PlayerSymbol detectSlash() {
     if (state.board[0][0] == PlayerSymbol.O
         && state.board[1][1] == PlayerSymbol.O
@@ -113,6 +148,11 @@ public class GameLogicHandler {
     return PlayerSymbol.E;
   }
 
+  /**
+   * Detect draw
+   *
+   * @return true if drow exist, false otherwise
+   */
   public boolean detectDraw() {
     for (var i = 0; i < 3; i++) {
       for (var j = 0; j < 3; j++) {
@@ -124,6 +164,12 @@ public class GameLogicHandler {
     return true;
   }
 
+  /**
+   * Register player
+   *
+   * @param side side of player to register
+   * @param name name of player
+   */
   public void register(PlayerSymbol side, String name) {
     if (name == null || name.equals("")) {
       return;
@@ -136,6 +182,13 @@ public class GameLogicHandler {
     state.setTitle(side, "Tic Tac Toe-Player: " + name);
   }
 
+  /**
+   * Perform the supplied move
+   *
+   * @param side side of player to move
+   * @param row  row of move
+   * @param col  col of move
+   */
   public void performMove(PlayerSymbol side, int row, int col) {
     if (!isGameStarted()) {
       return;
@@ -181,6 +234,9 @@ public class GameLogicHandler {
     }
   }
 
+  /**
+   * Handle exit action
+   */
   public void exit() {
     state.setEndGameMessage(
         PlayerSymbol.O,
@@ -193,16 +249,29 @@ public class GameLogicHandler {
     isInExitProcedure = true;
   }
 
+  /**
+   * After exit action
+   */
   public void afterExit() {
     state = new GameState();
     isInExitProcedure = false;
     postExit.run();
   }
 
+  /**
+   * Check if game is started
+   *
+   * @return true if game started
+   */
   public boolean isGameStarted() {
     return !state.OName.equals("") && !state.XName.equals("");
   }
 
+  /**
+   * Get current state.
+   *
+   * @return the current state
+   */
   public synchronized GameState getState() {
     return state;
   }

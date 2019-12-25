@@ -5,32 +5,62 @@ import java.io.Serializable;
 
 public class GameState implements Serializable {
 
+  /**
+   * Represent different sides, E for unspecified/no player
+   */
   public enum PlayerSymbol {
     O,
     X,
     E
   }
 
+  /**
+   * Represent current marks
+   */
   public PlayerSymbol[][] board = {
       {PlayerSymbol.E, PlayerSymbol.E, PlayerSymbol.E},
       {PlayerSymbol.E, PlayerSymbol.E, PlayerSymbol.E},
       {PlayerSymbol.E, PlayerSymbol.E, PlayerSymbol.E}
   };
 
+  /**
+   * winder of hae if exist, E if no one wins
+   */
   public PlayerSymbol winner = PlayerSymbol.E;
 
+  /**
+   * the player that should take the next step
+   */
   public PlayerSymbol nextStep = PlayerSymbol.O;
 
+  /**
+   * Name of O
+   */
   public String OName = "";
 
+  /**
+   * Name of X
+   */
   public String XName = "";
 
+  /**
+   * Message to O
+   */
   public String OMessage = "Enter your player name...";
 
+  /**
+   * Message to X
+   */
   public String XMessage = "Enter your player name...";
 
+  /**
+   * Title of O's window
+   */
   public String OTitle = "Tic Tac Toe";
 
+  /**
+   * Title of X's window
+   */
   public String XTitle = "Tic Tac Toe";
 
   /**
@@ -47,6 +77,12 @@ public class GameState implements Serializable {
    */
   public String XEndGameMessage = "";
 
+  /**
+   * Get name of player
+   *
+   * @param ps side of player
+   * @return such name
+   */
   public String getName(PlayerSymbol ps) {
     assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
     if (ps == PlayerSymbol.O) {
@@ -59,6 +95,12 @@ public class GameState implements Serializable {
     return "";
   }
 
+  /**
+   * Get message of player
+   *
+   * @param ps side of player
+   * @return such message
+   */
   public String getMessage(PlayerSymbol ps) {
     assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
     if (ps == PlayerSymbol.O) {
@@ -71,6 +113,12 @@ public class GameState implements Serializable {
     return "";
   }
 
+  /**
+   * Get title of player
+   *
+   * @param ps side of player
+   * @return such title
+   */
   public String getTitle(PlayerSymbol ps) {
     assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
     if (ps == PlayerSymbol.O) {
@@ -83,6 +131,12 @@ public class GameState implements Serializable {
     return "";
   }
 
+  /**
+   * Get end message of player
+   *
+   * @param ps side of player
+   * @return such end message
+   */
   public String getEndGameMessage(PlayerSymbol ps) {
     assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
     if (ps == PlayerSymbol.O) {
@@ -95,6 +149,12 @@ public class GameState implements Serializable {
     return "";
   }
 
+  /**
+   * Set name of player
+   *
+   * @param ps      side of player
+   * @param payload name of player
+   */
   public void setName(PlayerSymbol ps, String payload) {
     assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
     if (ps == PlayerSymbol.O) {
@@ -105,6 +165,13 @@ public class GameState implements Serializable {
     }
   }
 
+
+  /**
+   * Set message of player
+   *
+   * @param ps      side of player
+   * @param payload message of player
+   */
   public void setMessage(PlayerSymbol ps, String payload) {
     assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
     if (ps == PlayerSymbol.O) {
@@ -115,6 +182,13 @@ public class GameState implements Serializable {
     }
   }
 
+
+  /**
+   * Set title of player
+   *
+   * @param ps      side of player
+   * @param payload title of player
+   */
   public void setTitle(PlayerSymbol ps, String payload) {
     assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
     if (ps == PlayerSymbol.O) {
@@ -125,6 +199,13 @@ public class GameState implements Serializable {
     }
   }
 
+
+  /**
+   * Set end game message of player
+   *
+   * @param ps      side of player
+   * @param payload end game message of player
+   */
   public void setEndGameMessage(PlayerSymbol ps, String payload) {
     assert ps == PlayerSymbol.O || ps == PlayerSymbol.X;
     if (ps == PlayerSymbol.O) {

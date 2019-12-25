@@ -8,17 +8,34 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class GameStateServer implements Runnable {
 
+  /**
+   * Port used.
+   */
   static int port = 8964;
+
+  /**
+   * Handler used.
+   */
   GameLogicHandler handler;
+
+  /**
+   * Exit detected.
+   */
   Runnable onDetectExit;
-  Set<Socket> sockets = ConcurrentHashMap.newKeySet();
-  Set<ObjectOutputStream> objectOutputStreams = ConcurrentHashMap.newKeySet();
+
+  private Set<Socket> sockets = ConcurrentHashMap.newKeySet();
+
+  private Set<ObjectOutputStream> objectOutputStreams = ConcurrentHashMap
+      .newKeySet();
 
   public GameStateServer(GameLogicHandler handler, Runnable onDetectExit) {
     this.handler = handler;
     this.onDetectExit = onDetectExit;
   }
 
+  /**
+   * Broadcast the state to clients
+   */
   public synchronized void broadcast() {
     for (var objectOutputStream : objectOutputStreams) {
       try {
@@ -31,11 +48,17 @@ public class GameStateServer implements Runnable {
     }
   }
 
+  /**
+   * Remove all existing connections.
+   */
   public void halt() {
     sockets = ConcurrentHashMap.newKeySet();
     objectOutputStreams = ConcurrentHashMap.newKeySet();
   }
 
+  /**
+   * Run the server
+   */
   @Override
   public void run() {
     try {
