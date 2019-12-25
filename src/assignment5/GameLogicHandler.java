@@ -1,8 +1,6 @@
-package com.example.hku.comp2396.assignment5;
+package assignment5;
 
-import com.example.hku.comp2396.assignment5.GameAction.Type;
-import com.example.hku.comp2396.assignment5.GameState.PlayerSymbol;
-import java.io.Serializable;
+import assignment5.GameState.PlayerSymbol;
 import java.util.Arrays;
 import java.util.Collections;
 

@@ -1,6 +1,6 @@
-package com.example.hku.comp2396.assignment5;
+package assignment5;
 
-import com.example.hku.comp2396.assignment5.GameState.PlayerSymbol;
+import assignment5.GameState.PlayerSymbol;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,12 +11,7 @@ import java.awt.Insets;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.net.Socket;
-import java.util.concurrent.locks.ReentrantLock;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;

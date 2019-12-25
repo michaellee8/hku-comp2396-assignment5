@@ -1,6 +1,6 @@
-package com.example.hku.comp2396.assignment5;
+package assignment5;
 
-import com.example.hku.comp2396.assignment5.GameState.PlayerSymbol;
+import assignment5.GameState.PlayerSymbol;
 import java.io.Serializable;
 
 public class GameAction implements Serializable {

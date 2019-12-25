@@ -1,4 +1,4 @@
-package com.example.hku.comp2396.assignment5;
+package assignment5;
 
 public class Main {
 
