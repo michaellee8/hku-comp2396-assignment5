@@ -13,3 +13,8 @@ populate it back to the client.
 The client component of this game act as a renderer of the server. It receives `GameState` from 
 server and render it accordingly, and sends back `GameAction` to the server upon user interaction 
 or client events.
+
+## How to run
+1. Open a terminal in the root folder of this repo. It is assumed that you are using Linux.
+2. `mkdir out`
+3. 

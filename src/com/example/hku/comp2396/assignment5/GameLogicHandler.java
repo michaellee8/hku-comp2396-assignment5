@@ -21,6 +21,8 @@ public class GameLogicHandler {
   public GameState state = new GameState();
 
   public boolean isInExitProcedure = false;
+  public Runnable postExit = () -> {
+  };
 
   public synchronized void handleAction(GameAction action) {
     assert action.side == PlayerSymbol.O || action.side == PlayerSymbol.X;
@@ -133,6 +135,7 @@ public class GameLogicHandler {
     }
     state.setName(side, name);
     state.setMessage(side, "WELCOME " + name);
+    state.setTitle(side, "Tic Tac Toe-Player: " + name);
   }
 
   public void performMove(PlayerSymbol side, int row, int col) {
@@ -160,16 +163,22 @@ public class GameLogicHandler {
     if (winner == PlayerSymbol.O) {
       state.setEndGameMessage(PlayerSymbol.O, winMessage);
       state.setEndGameMessage(PlayerSymbol.X, loseMessage);
+
+      isInExitProcedure = true;
       return;
     }
     if (winner == PlayerSymbol.X) {
       state.setEndGameMessage(PlayerSymbol.X, winMessage);
       state.setEndGameMessage(PlayerSymbol.O, loseMessage);
+
+      isInExitProcedure = true;
       return;
     }
     if (detectDraw()) {
       state.setEndGameMessage(PlayerSymbol.O, drawMessage);
       state.setEndGameMessage(PlayerSymbol.X, drawMessage);
+
+      isInExitProcedure = true;
       return;
     }
   }
@@ -189,6 +198,7 @@ public class GameLogicHandler {
   public void afterExit() {
     state = new GameState();
     isInExitProcedure = false;
+    postExit.run();
   }
 
   public boolean isGameStarted() {
